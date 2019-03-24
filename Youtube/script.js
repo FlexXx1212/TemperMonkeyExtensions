@@ -14,9 +14,14 @@
 // ==/UserScript==
 
 waitForKeyElements("#end", createMenu);
+waitForKeyElements("#yt-masthead-user", createMenu);
 
 function createMenu() {
     var menuTop = document.getElementById("end");
+
+    if(menuTop === null) {
+      menuTop = document.getElementById("yt-masthead-user");
+    }
     var btnMenu = document.createElement("button");
     var popupMenu = document.createElement("span");
     var btnHideEndCards = document.createElement("button");
@@ -31,7 +36,7 @@ function createMenu() {
     popupMenu.classList.add("popuptext");
     popupMenu.id = "popupMenu";
 
-    btnHideEndCards.addEventListener("click", hideEndcards);
+    btnHideEndCards.addEventListener("click", toggleEndcards);
     btnHideEndCards.innerText = "Hide EndCards";
     btnHideEndCards.classList.add("customButton");
     btnHideEndCards.classList.add("gray");
@@ -47,35 +52,22 @@ function createMenu() {
     menuTop.insertBefore(btnMenu, menuTop.firstChild);
 }
 
-/*jQuery(function() {
-  var node = document.createElement("a");
-  var menuBar = document.getElementsByClassName("title style-scope ytd-video-primary-info-renderer");
-  node.href = "https://img.youtube.com/vi/" + location.href.substr(32) + "/maxresdefault.jpg";
-  node.innerHTML = "Thumb";
-  node.classList.add("customButtons");
-  menuBar[0].appendChild(node);
-  var node2 = document.createElement("a");
-  node2.classList.add("customButtons");
-  node2.href = "javascript:hideEndcards()";
-  node2.innerHTML = "Cards";
-  menuBar[0].appendChild(node2);
-});*/
-
 function openMenu() {
     console.log("Open Menu");
     var popup = document.getElementById("popupMenu");
     popup.classList.toggle("show");
 }
 
-function hideEndcards() {
+function toggleEndcards() {
     var cards = document.getElementsByClassName("ytp-ce-element");
     for (var i = 0; i < cards.length; i++) {
-        cards[i].style.visibility = "hidden";
+        cards[i].style.visibility = cards[i].style.visibility == "hidden" ? "visible" : "hidden";
     }
 }
 
 function showThumbnail() {
-    window.location.href = "https://img.youtube.com/vi/" + location.href.substr(32) + "/maxresdefault.jpg";
+    var url = "https://img.youtube.com/vi/" + location.href.substr(32) + "/maxresdefault.jpg";
+    window.open(url, '_blank');
 }
 
 window.addEventListener('visibilitychange', () => {
@@ -96,7 +88,7 @@ window.addEventListener('visibilitychange', () => {
 window.onunload = function() {};
 
 GM_addStyle(`
-    .customButton {
+.customButton {
   border: none;
   color: white;
   padding: 7px 16px;
@@ -106,7 +98,8 @@ GM_addStyle(`
   font-size: 16px;
   outline:none;
   cursor: pointer;
-margin: 5px;
+  margin: 5px;
+  width: 150px;
 }
 .red  { background-color: #f44336;}
 .blue { background-color: #008CBA;}
