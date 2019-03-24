@@ -1,20 +1,54 @@
 // ==UserScript==
-// @name           Google
+// @name           Netflix
 // @namespace      Flex
 // @version        0.1
-// @description    More functionality
+// @description    Hotkeys
 // @author         FlexNiko
-// @include        http://www.google.de/*
-// @include        http://google.de/*
-// @include        https://www.google.de/*
-// @include        https://google.de/*
-// @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
-// @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @include        http://www.netflix.com/*
+// @include        http://netflix.com/*
+// @include        https://www.netflix.com/*
+// @include        https://netflix.com/*
 // ==/UserScript==
 
-jQuery(function() {
-    document.getElementById("hdtb-tls").click();
-  });
+function play() {
+    if (clickBtn("button-nfplayerPlay")) {
+        return true;
+    }
+    return false;
+}
 
-// fix: script wouldnt load when pressing BACK
-window.onunload = function() {};
+function pause() {
+    if (clickBtn("button-nfplayerPause")) {
+        return true;
+    }
+    return false;
+}
+
+function skip() {
+    clickBtn("button-nfplayerFastForward");
+}
+
+function back() {
+    clickBtn("button-nfplayerBackTen");
+}
+
+function clickBtn(s) {
+    var btns = document.getElementsByClassName(s);
+    if (btns.length > 0) {
+        btns[0].click();
+        return true;
+    }
+    return false;
+}
+
+document.onkeyup = function(e) {
+    if (e.which == 65) {
+        back();
+    } else if (e.which == 83) {
+        if (!play()) {
+            pause();
+        }
+    } else if (e.which == 68) {
+        skip();
+    }
+};
