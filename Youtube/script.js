@@ -18,16 +18,19 @@
 waitForKeyElements("#end", createMenu);
 waitForKeyElements("#yt-masthead-user", createMenu);
 
+var btnHideEndCards,btnShowThumbnail,btnAutoplay,popupMenu,btnMenu;
+
 function createMenu() {
     var menuTop = document.getElementById("end");
 
     if(menuTop === null) {
       menuTop = document.getElementById("yt-masthead-user");
     }
-    var btnMenu = document.createElement("button");
-    var popupMenu = document.createElement("span");
-    var btnHideEndCards = document.createElement("button");
-    var btnShowThumbnail = document.createElement("button");
+    btnMenu = document.createElement("button");
+    popupMenu = document.createElement("span");
+    btnHideEndCards = document.createElement("button");
+    btnShowThumbnail = document.createElement("button");
+    btnAutoplay = document.createElement("button");
 
     btnMenu.classList.add("customButton");
     btnMenu.classList.add("blue");
@@ -50,18 +53,46 @@ function createMenu() {
     btnShowThumbnail.classList.add("gray");
     btnShowThumbnail.id = "btnShowThumbnail";
 
+    btnAutoplay.addEventListener("click", toggleAutoplay);
+    btnAutoplay.innerText = "Autopause";
+    btnAutoplay.classList.add("customButton");
+    btnAutoplay.classList.add("green");
+    btnAutoplay.id = "btnAutoplay";
+
     popupMenu.appendChild(btnHideEndCards);
     popupMenu.appendChild(btnShowThumbnail);
+    popupMenu.appendChild(btnAutoplay);
     btnMenu.appendChild(popupMenu);
     menuTop.insertBefore(btnMenu, menuTop.firstChild);
 }
 
+var autopause = true;
+
+(async () => {
+  autopause = await GM_getValue('autopause', true);
+})();
+
+function toggleAutoplay()  {
+    GM_setValue('autopause', !autopause);
+    autopause = !autopause;
+    refreshAutoplayButton();
+}
+
+function refreshAutoplayButton() {
+  if(autopause) {
+    btnAutoplay.classList.add("green");
+    btnAutoplay.classList.remove("red");
+  } else {
+    btnAutoplay.classList.add("red");
+    btnAutoplay.classList.remove("green");
+  }
+}
+
 function openMenu() {
     var popup = document.getElementById("popupMenu");
+
     //disable buttons if not on watch page
     var isVideo = location.href.includes("watch");
-    var btnHideEndCards = document.getElementById("btnHideEndCards");
-    var btnShowThumbnail = document.getElementById("btnShowThumbnail");
     if(!isVideo) {
       btnHideEndCards.disabled = true;
       btnHideEndCards.classList.add("disabled-btn")
@@ -73,6 +104,9 @@ function openMenu() {
       btnShowThumbnail.disabled = false;
       btnShowThumbnail.classList.remove("disabled-btn")
     }
+
+    refreshAutoplayButton();
+
     popup.classList.toggle("show");
 }
 
@@ -89,6 +123,7 @@ function showThumbnail() {
 }
 
 window.addEventListener('visibilitychange', () => {
+    if(!autopause) return;
     var video = document.getElementsByTagName("video")[0];
     if (video) {
         switch (document.visibilityState) {
