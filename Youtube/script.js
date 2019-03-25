@@ -4,13 +4,15 @@
 // @version        0.1
 // @description    More functionality
 // @author         FlexNiko
-// @include        http://www.youtube.com/watch*
-// @include        http://youtube.com/watch*
-// @include        https://www.youtube.com/watch*
-// @include        https://youtube.com/watch*
+// @include        http://www.youtube.com/*
+// @include        http://youtube.com/*
+// @include        https://www.youtube.com/*
+// @include        https://youtube.com/*
 // @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant          GM_addStyle
+// @grant          GM_setValue
+// @grant          GM_getValue
 // ==/UserScript==
 
 waitForKeyElements("#end", createMenu);
@@ -40,11 +42,13 @@ function createMenu() {
     btnHideEndCards.innerText = "Hide EndCards";
     btnHideEndCards.classList.add("customButton");
     btnHideEndCards.classList.add("gray");
+    btnHideEndCards.id = "btnHideEndCards";
 
     btnShowThumbnail.addEventListener("click", showThumbnail);
     btnShowThumbnail.innerText = "Show Thumb";
     btnShowThumbnail.classList.add("customButton");
     btnShowThumbnail.classList.add("gray");
+    btnShowThumbnail.id = "btnShowThumbnail";
 
     popupMenu.appendChild(btnHideEndCards);
     popupMenu.appendChild(btnShowThumbnail);
@@ -53,8 +57,22 @@ function createMenu() {
 }
 
 function openMenu() {
-    console.log("Open Menu");
     var popup = document.getElementById("popupMenu");
+    //disable buttons if not on watch page
+    var isVideo = location.href.includes("watch");
+    var btnHideEndCards = document.getElementById("btnHideEndCards");
+    var btnShowThumbnail = document.getElementById("btnShowThumbnail");
+    if(!isVideo) {
+      btnHideEndCards.disabled = true;
+      btnHideEndCards.classList.add("disabled-btn")
+      btnShowThumbnail.disabled = true;
+      btnShowThumbnail.classList.add("disabled-btn")
+    } else {
+      btnHideEndCards.disabled = false;
+      btnHideEndCards.classList.remove("disabled-btn")
+      btnShowThumbnail.disabled = false;
+      btnShowThumbnail.classList.remove("disabled-btn")
+    }
     popup.classList.toggle("show");
 }
 
@@ -66,7 +84,7 @@ function toggleEndcards() {
 }
 
 function showThumbnail() {
-    var url = "https://img.youtube.com/vi/" + location.href.substr(32) + "/maxresdefault.jpg";
+    var url = "https://img.youtube.com/vi/" + location.href.substr(32,11) + "/maxresdefault.jpg";
     window.open(url, '_blank');
 }
 
@@ -105,6 +123,7 @@ GM_addStyle(`
 .blue { background-color: #008CBA;}
 .green{ background-color: #4CAF50;}
 .gray { background-color: #e7e7e7; color: black;}
+.disabled-btn { background-color: #d6d6d6; color: #f8f8f8;}
 
 .popup {
   position: relative;
