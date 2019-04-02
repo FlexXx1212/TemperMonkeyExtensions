@@ -1,54 +1,21 @@
 // ==UserScript==
-// @name           Netflix
+// @name           Google
 // @namespace      Flex
 // @version        0.1
-// @description    Hotkeys
+// @description    More functionality
 // @author         FlexNiko
-// @include        http://www.netflix.com/*
-// @include        http://netflix.com/*
-// @include        https://www.netflix.com/*
-// @include        https://netflix.com/*
+// @include        http://www.google.*
+// @include        http://google.*
+// @include        https://www.google.*
+// @include        https://google.*
+// @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+// @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-function play() {
-    if (clickBtn("button-nfplayerPlay")) {
-        return true;
-    }
-    return false;
-}
 
-function pause() {
-    if (clickBtn("button-nfplayerPause")) {
-        return true;
-    }
-    return false;
-}
+jQuery(function() {
+    document.getElementById("hdtb-tls").click();
+});
 
-function skip() {
-    clickBtn("button-nfplayerFastForward");
-}
-
-function back() {
-    clickBtn("button-nfplayerBackTen");
-}
-
-function clickBtn(s) {
-    var btns = document.getElementsByClassName(s);
-    if (btns.length > 0) {
-        btns[0].click();
-        return true;
-    }
-    return false;
-}
-
-document.onkeyup = function(e) {
-    if (e.which == 65) {
-        back();
-    } else if (e.which == 83) {
-        if (!play()) {
-            pause();
-        }
-    } else if (e.which == 68) {
-        skip();
-    }
-};
+// fix: script wouldnt load when pressing BACK
+window.onunload = function() {};
