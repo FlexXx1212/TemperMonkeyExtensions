@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Google
+// @name           Google Automatically Show Tools
 // @namespace      Flex
 // @version        0.1
 // @description    More functionality
@@ -12,9 +12,8 @@
 // @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
-
 jQuery(function() {
-    document.getElementById("hdtb-tls").click();
+  document.getElementById("hdtb-tls").click();
 });
 
 // fix: script wouldnt load when pressing BACK
