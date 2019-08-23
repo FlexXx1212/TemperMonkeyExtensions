@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Menu
 // @namespace      Flex
-// @version        0.1
+// @version        1.0
 // @description    More functionality
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
@@ -56,7 +56,7 @@ function createMenu() {
   btnAutoplay.addEventListener("click", toggleAutoplay);
   btnAutoplay.innerText = "Autopause";
   btnAutoplay.classList.add("customButton");
-  btnAutoplay.classList.add("green");
+  btnAutoplay.classList.add("red");
   btnAutoplay.id = "btnAutoplay";
 
   popupMenu.appendChild(btnHideEndCards);
@@ -66,11 +66,13 @@ function createMenu() {
   menuTop.insertBefore(btnMenu, menuTop.firstChild);
 }
 
-var autopause = true;
+var autopause = false;
 
-(async () => {
-  autopause = await GM_getValue("autopause", true);
-})();
+async function retrieveAutopause() {
+  autopause = await GM_getValue("autopause", false);
+}
+
+retrieveAutopause();
 
 function toggleAutoplay() {
   GM_setValue("autopause", !autopause);
@@ -78,7 +80,8 @@ function toggleAutoplay() {
   refreshAutoplayButton();
 }
 
-function refreshAutoplayButton() {
+async function refreshAutoplayButton() {
+  await retrieveAutopause();
   if (autopause) {
     btnAutoplay.classList.add("green");
     btnAutoplay.classList.remove("red");
@@ -126,7 +129,8 @@ function showThumbnail() {
   window.open(url, "_blank");
 }
 
-window.addEventListener("visibilitychange", () => {
+window.addEventListener("visibilitychange", async () => {
+  await retrieveAutopause();
   if (!autopause) return;
   var video = document.getElementsByTagName("video")[0];
   if (video) {
