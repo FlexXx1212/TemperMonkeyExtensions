@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Jazz expand all
 // @namespace      Flex
-// @version        0.1
+// @version        0.2
 // @description    expand all features
 // @author         FlexNiko
 // @include        https://bt-clmserver01.hqs.sbt.siemens.com*
@@ -15,10 +15,8 @@ function delayedCheck() {
       "#com_ibm_team_rtc_foundation_web_ui_widgets_FlatButton_8 > div > a"
     ) === null
   ) {
-    console.log("nicht da");
     setTimeout(delayedCheck, 100);
   } else {
-    console.log("da");
     setTimeout(clickExpand, 1000);
   }
 }
