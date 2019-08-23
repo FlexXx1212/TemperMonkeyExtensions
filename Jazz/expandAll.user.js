@@ -2,8 +2,6 @@
 // @name           Jazz expand all
 // @namespace      Flex
 // @version        0.1
-// @updateURL      https://raw.githubusercontent.com/FlexXx1212/TemperMonkeyExtensions/master/Jazz/expandAll.user.js
-// @downloadURL    https://raw.githubusercontent.com/FlexXx1212/TemperMonkeyExtensions/master/Jazz/expandAll.user.js
 // @description    expand all features
 // @author         FlexNiko
 // @include        https://bt-clmserver01.hqs.sbt.siemens.com*
