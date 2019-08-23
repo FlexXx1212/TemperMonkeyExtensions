@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Google Automatically Show Tools
 // @namespace      Flex
-// @version        0.1
+// @version        1.0
 // @description    More functionality
 // @author         FlexNiko
 // @include        http://www.google.*
@@ -12,7 +12,12 @@
 // ==/UserScript==
 
 jQuery(function() {
-  document.getElementById("hdtb-tls").click();
+  var elem = document.getElementById("hdtbMenus");
+  if (elem.getAttribute("aria-expanded") === "false") {
+    elem.setAttribute("aria-expanded", "true");
+  }
+  elem.classList.remove("hdtb-td-c");
+  elem.classList.add("hdtb-td-o");
 });
 
 // fix: script wouldnt load when pressing BACK
