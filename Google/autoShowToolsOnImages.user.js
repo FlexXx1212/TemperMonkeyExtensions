@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Google Automatically Show Tools
 // @namespace      Flex
-// @version        1.0
+// @version        1.1
 // @description    More functionality
 // @author         FlexNiko
 // @include        http://www.google.*
