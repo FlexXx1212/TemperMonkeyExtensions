@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Jazz expand all
 // @namespace      Flex
-// @version        0.2
+// @version        1.0
 // @description    expand all features
 // @author         FlexNiko
 // @include        https://bt-clmserver01.hqs.sbt.siemens.com*
@@ -9,28 +9,23 @@
 // @require       http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.js
 // ==/UserScript==
 
-function delayedCheck() {
-  if (
-    document.querySelector(
-      "#com_ibm_team_rtc_foundation_web_ui_widgets_FlatButton_8 > div > a"
-    ) === null
-  ) {
-    setTimeout(delayedCheck, 100);
+function waitForElemToExist(elemSelector, handle, waitTime = 1000) {
+  if (document.querySelector(elemSelector) === null) {
+    setTimeout(waitForElemToExist, 100);
   } else {
-    setTimeout(clickExpand, 1000);
+    setTimeout(handle, waitTime, elemSelector);
   }
 }
 
-function clickExpand() {
-  document
-    .querySelector(
-      "#com_ibm_team_rtc_foundation_web_ui_widgets_FlatButton_8 > div > a"
-    )
-    .click();
+function clickExpand(elemSelector) {
+  document.querySelector(elemSelector).click();
 }
 
 jQuery(function() {
-  delayedCheck();
+  waitForElemToExist(
+    "#com_ibm_team_rtc_foundation_web_ui_widgets_FlatButton_8 > div > a",
+    clickExpand
+  );
 });
 
 // fix: script wouldnt load when pressing BACK
