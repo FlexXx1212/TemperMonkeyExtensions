@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Hotkeys
 // @namespace      Flex
-// @version        0.1
+// @version        0.2
 // @description    Play Skip Rewind Pause for Youtube on Keys : A S D
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
@@ -20,11 +20,14 @@ function doc_keyUp(e) {
     e.target.id === "search" ||
     e.target.id === "masthead-search-term" ||
     e.target.className === "comment-simplebox-text" ||
-    e.target.tagName.toLowerCase() == "yt-formatted-string"
+    e.target.tagName.toLowerCase() === "yt-formatted-string"
   ) {
     return;
   }
-  if (e.target.classList.contains("yt-formatted-string")) {
+  if (
+    e.target.classList.contains("yt-formatted-string") &&
+    e.target.tagName.toLowerCase() !== "a"
+  ) {
     return;
   }
   var video = document.getElementsByTagName("video")[0];
