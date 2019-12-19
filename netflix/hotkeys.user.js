@@ -10,20 +10,6 @@
 // @include        https://netflix.com/*
 // ==/UserScript==
 
-function play() {
-  if (clickBtn("button-nfplayerPlay")) {
-    return true;
-  }
-  return false;
-}
-
-function pause() {
-  if (clickBtn("button-nfplayerPause")) {
-    return true;
-  }
-  return false;
-}
-
 function skip() {
   clickBtn("button-nfplayerFastForward");
 }
@@ -42,19 +28,22 @@ function clickBtn(s) {
 }
 
 document.onkeyup = function(e) {
+  var video = document.getElementsByTagName("video")[0];
   if (e.which == 65) {
     back();
     setTimeout(function() {
-      play();
+      video.play();
     }, 500);
   } else if (e.which == 83) {
-    if (!play()) {
-      pause();
+    if (video.paused) {
+      video.play();
+    } else {
+      video.pause();
     }
   } else if (e.which == 68) {
     skip();
     setTimeout(function() {
-      play();
+      video.play();
     }, 500);
   }
 };
