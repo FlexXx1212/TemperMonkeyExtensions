@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Netflix Hotkeys
 // @namespace      Flex
-// @version        0.1
+// @version        0.2
 // @description    Hotkeys
 // @author         FlexNiko
 // @include        http://www.netflix.com/*
