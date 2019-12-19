@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Netflix Hotkeys
 // @namespace      Flex
-// @version        1.1
+// @version        1.2
 // @description    Hotkeys
 // @author         FlexNiko
 // @include        http://www.netflix.com/*
@@ -43,7 +43,7 @@ document.onkeyup = function(e) {
 var html = document.getElementsByTagName("html")[0];
 
 function getBrightness() {
-  return html.getAttribute("data-video-brightness") || 1;
+  return html.getAttribute("data-video-brightness") || "1";
 }
 
 function setBrightness(n) {
