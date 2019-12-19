@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Netflix Hotkeys
 // @namespace      Flex
-// @version        0.3
+// @version        1.0
 // @description    Hotkeys
 // @author         FlexNiko
 // @include        http://www.netflix.com/*
@@ -10,44 +10,25 @@
 // @include        https://netflix.com/*
 // ==/UserScript==
 
-function skip() {
-  clickBtn("button-nfplayerFastForward");
-}
-
-function back() {
-  clickBtn("button-nfplayerBackTen");
-}
-
-function clickBtn(s) {
-  var btns = document.getElementsByClassName(s);
-  if (btns.length > 0) {
-    btns[0].click();
-    return true;
-  }
-  return false;
-}
-
 document.onkeyup = function(e) {
-  var video = document.getElementsByTagName("video")[0];
+  const videoPlayer = netflix.appContext.state.playerApp.getAPI().videoPlayer;
+  const playerSessionId = videoPlayer.getAllPlayerSessionIds()[0];
+  const player = videoPlayer.getVideoPlayerBySessionId(playerSessionId);
+
+  // back 10 sec
   if (e.which == 65) {
-    back();
-    if (!video.paused) {
-      setTimeout(function() {
-        video.play();
-      }, 500);
-    }
-  } else if (e.which == 83) {
-    if (video.paused) {
-      video.play();
+    player.seek(player.getCurrentTime() - 10000);
+  }
+  // play / pause
+  else if (e.which == 83) {
+    if (player.isPaused()) {
+      player.play();
     } else {
-      video.pause();
+      player.pause();
     }
-  } else if (e.which == 68) {
-    skip();
-    if (!video.paused) {
-      setTimeout(function() {
-        video.play();
-      }, 500);
-    }
+  }
+  // skip 10 secs
+  else if (e.which == 68) {
+    player.seek(player.getCurrentTime() + 10000);
   }
 };
