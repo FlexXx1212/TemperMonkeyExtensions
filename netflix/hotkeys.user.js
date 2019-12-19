@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Netflix Hotkeys
 // @namespace      Flex
-// @version        0.2
+// @version        0.3
 // @description    Hotkeys
 // @author         FlexNiko
 // @include        http://www.netflix.com/*
@@ -31,9 +31,11 @@ document.onkeyup = function(e) {
   var video = document.getElementsByTagName("video")[0];
   if (e.which == 65) {
     back();
-    setTimeout(function() {
-      video.play();
-    }, 500);
+    if (!video.paused) {
+      setTimeout(function() {
+        video.play();
+      }, 500);
+    }
   } else if (e.which == 83) {
     if (video.paused) {
       video.play();
@@ -42,8 +44,10 @@ document.onkeyup = function(e) {
     }
   } else if (e.which == 68) {
     skip();
-    setTimeout(function() {
-      video.play();
-    }, 500);
+    if (!video.paused) {
+      setTimeout(function() {
+        video.play();
+      }, 500);
+    }
   }
 };
