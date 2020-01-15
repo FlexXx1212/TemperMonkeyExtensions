@@ -18,7 +18,12 @@
 waitForKeyElements("#end", createMenu);
 waitForKeyElements("#yt-masthead-user", createMenu);
 
-var btnHideEndCards, btnShowThumbnail, btnAutoplay, popupMenu, btnMenu;
+var btnHideEndCards,
+  btnShowThumbnail,
+  btnCleanPage,
+  btnAutoplay,
+  popupMenu,
+  btnMenu;
 
 function createMenu() {
   var menuTop = document.getElementById("end");
@@ -30,6 +35,7 @@ function createMenu() {
   popupMenu = document.createElement("span");
   btnHideEndCards = document.createElement("button");
   btnShowThumbnail = document.createElement("button");
+  btnCleanPage = document.createElement("button");
   btnAutoplay = document.createElement("button");
 
   btnMenu.classList.add("customButton");
@@ -53,6 +59,12 @@ function createMenu() {
   btnShowThumbnail.classList.add("gray");
   btnShowThumbnail.id = "btnShowThumbnail";
 
+  btnCleanPage.addEventListener("click", toggleCleanPage);
+  btnCleanPage.innerText = "Clean Page";
+  btnCleanPage.classList.add("customButton");
+  btnCleanPage.classList.add("gray");
+  btnCleanPage.id = "btnCleanPage";
+
   btnAutoplay.addEventListener("click", toggleAutoplay);
   btnAutoplay.innerText = "Autopause";
   btnAutoplay.classList.add("customButton");
@@ -61,6 +73,7 @@ function createMenu() {
 
   popupMenu.appendChild(btnHideEndCards);
   popupMenu.appendChild(btnShowThumbnail);
+  popupMenu.appendChild(btnCleanPage);
   popupMenu.appendChild(btnAutoplay);
   btnMenu.appendChild(popupMenu);
   menuTop.insertBefore(btnMenu, menuTop.firstChild);
@@ -88,6 +101,15 @@ async function refreshAutoplayButton() {
   } else {
     btnAutoplay.classList.add("red");
     btnAutoplay.classList.remove("green");
+  }
+}
+
+function toggleCleanPage() {
+  var elem = document.getElementById("columns");
+  if (elem.style.display !== "none") {
+    document.getElementById("columns").style.display = "none";
+  } else {
+    document.getElementById("columns").style.display = "";
   }
 }
 
@@ -182,7 +204,7 @@ GM_addStyle(`
 .popup .popuptext {
   visibility: hidden;
   width: 160px;
-  background-color: #555;
+  background-color: #008CBA;
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -203,7 +225,7 @@ GM_addStyle(`
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent #555 transparent;
+  border-color: transparent transparent #008CBA transparent;
 }
 
 /* Toggle this class - hide and show the popup */
