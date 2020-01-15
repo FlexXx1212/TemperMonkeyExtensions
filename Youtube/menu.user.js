@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Menu
 // @namespace      Flex
-// @version        1.1
+// @version        1.2
 // @description    Adds a Menu in the Top Bar with useful functions
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
@@ -146,7 +146,7 @@ function toggleEndcards() {
 function showThumbnail() {
   var url =
     "https://img.youtube.com/vi/" +
-    location.href.substr(32, 11) +
+    location.href.substr(location.href.indexOf("v=") + 2, 11) +
     "/maxresdefault.jpg";
   window.open(url, "_blank");
 }
