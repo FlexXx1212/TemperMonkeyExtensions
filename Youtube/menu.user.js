@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name           Youtube Menu
 // @namespace      Flex
-// @version        1.0
-// @description    More functionality
+// @version        1.1
+// @description    Adds a Menu in the Top Bar with useful functions
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
 // @include        http://youtube.com/*
