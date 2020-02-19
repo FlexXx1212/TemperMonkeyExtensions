@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Jazz expand all
 // @namespace      Flex
-// @version        1.2
+// @version        1.3
 // @description    expand all features
 // @author         FlexNiko
 // @include        https://bt-clmserver01.hqs.sbt.siemens.com*
@@ -19,7 +19,9 @@ function waitForElemToExist(elemSelector, callBack, waitTime = 1000) {
 
 function clickExpand(elemSelector) {
   document.querySelector(elemSelector).click();
-  window.scrollTo(0, document.body.scrollHeight);
+  setTimeout(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, 3000);
 }
 
 jQuery(function() {
