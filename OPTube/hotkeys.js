@@ -12,6 +12,7 @@
 // @include        https://www.aniclouds.org/*
 // @include        http://aniclouds.org/*
 // @include        http://www.aniclouds.org/*
+// @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @grant          GM_addStyle
 // @grant          GM_setValue
 // @grant          GM_getValue
@@ -20,6 +21,7 @@
 function doc_keyUp(e) {
   console.log(document);
   console.log(document.getElementsByTagName("video"));
+  $("#embed > iframe").trigger("keypress", { which: 39 });
   return;
   var video = document.getElementsByTagName("video")[0];
   console.log(document);
