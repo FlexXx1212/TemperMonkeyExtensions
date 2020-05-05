@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Menu
 // @namespace      Flex
-// @version        1.2
+// @version        1.3
 // @description    Adds a Menu in the Top Bar with useful functions
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
@@ -21,11 +21,13 @@ waitForKeyElements("#yt-masthead-user", createMenu);
 var btnHideEndCards,
   btnShowThumbnail,
   btnCleanPage,
+  btnBrightness,
   btnAutoplay,
   popupMenu,
   btnMenu;
 
 function createMenu() {
+  setBrightness();
   var menuTop = document.getElementById("end");
 
   if (menuTop === null) {
@@ -37,6 +39,7 @@ function createMenu() {
   btnShowThumbnail = document.createElement("button");
   btnCleanPage = document.createElement("button");
   btnAutoplay = document.createElement("button");
+  btnBrightness = document.createElement("button");
 
   btnMenu.classList.add("customButton");
   btnMenu.classList.add("blue");
@@ -71,20 +74,25 @@ function createMenu() {
   btnAutoplay.classList.add("red");
   btnAutoplay.id = "btnAutoplay";
 
+  btnBrightness.addEventListener("click", toggleBrightness);
+  btnBrightness.innerText = "Brightness";
+  btnBrightness.classList.add("customButton");
+  btnBrightness.classList.add("red");
+  btnBrightness.id = "btnBrightness";
+
   popupMenu.appendChild(btnHideEndCards);
   popupMenu.appendChild(btnShowThumbnail);
   popupMenu.appendChild(btnCleanPage);
+  popupMenu.appendChild(btnBrightness);
   popupMenu.appendChild(btnAutoplay);
   btnMenu.appendChild(popupMenu);
   menuTop.insertBefore(btnMenu, menuTop.firstChild);
 }
 
 var autopause = false;
-
 async function retrieveAutopause() {
   autopause = await GM_getValue("autopause", false);
 }
-
 retrieveAutopause();
 
 function toggleAutoplay() {
@@ -101,6 +109,41 @@ async function refreshAutoplayButton() {
   } else {
     btnAutoplay.classList.add("red");
     btnAutoplay.classList.remove("green");
+  }
+}
+
+var brightness = false;
+async function retrieveBrightness() {
+  brightness = await GM_getValue("brightness", false);
+}
+retrieveBrightness();
+
+function toggleBrightness() {
+  GM_setValue("brightness", !brightness);
+  brightness = !brightness;
+  setBrightness();
+  refreshBrightnessButton();
+}
+
+function setBrightness() {
+  var video = document.getElementsByTagName("video")[0];
+  if(video) {
+    if(brightness) {
+      video.style.filter = "brightness(175%)";
+    } else {
+      video.style.filter = "brightness(100%)";
+    }
+  }
+}
+
+async function refreshBrightnessButton() {
+  await retrieveBrightness();
+  if (brightness) {
+    btnBrightness.classList.add("green");
+    btnBrightness.classList.remove("red");
+  } else {
+    btnBrightness.classList.add("red");
+    btnBrightness.classList.remove("green");
   }
 }
 
@@ -131,6 +174,7 @@ function openMenu() {
   }
 
   refreshAutoplayButton();
+  refreshBrightnessButton();
 
   popup.classList.toggle("show");
 }
@@ -153,16 +197,22 @@ function showThumbnail() {
 
 window.addEventListener("visibilitychange", async () => {
   await retrieveAutopause();
+  await retrieveBrightness();
+  setBrightness();
+
   if (!autopause) return;
+
   var video = document.getElementsByTagName("video")[0];
   if (video) {
-    switch (document.visibilityState) {
-      case "hidden":
-        video.pause();
-        break;
-      case "visible":
-        video.play();
-        break;
+    if(autopause) {
+      switch (document.visibilityState) {
+        case "hidden":
+          video.pause();
+          break;
+        case "visible":
+          video.play();
+          break;
+      }
     }
   }
 });
