@@ -27,4 +27,4 @@ function keyUpEventListener(e) {
   }
 }
 
-document.addEventListener("keyUp", keyUpEventListener);
+document.addEventListener("keyup", keyUpEventListener);
