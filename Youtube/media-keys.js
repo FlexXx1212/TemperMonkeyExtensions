@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           Media/Skip Keys
+// @name           Youtube Media/Skip Keys
 // @namespace      Flex
 // @version        0.1
 // @description    Adds two buttons for going back and skipping 10 seconds
@@ -33,10 +33,21 @@ function createButtons() {
   var skip10elem = createElementFromHTML(skip10string);
   var back10elem = createElementFromHTML(back10string);
 
-  popupMenu.appendChild(btnHideEndCards);
+  skip10elem.addEventListener("click", skipSeconds);
+  back10elem.addEventListener("click", backSeconds);
 
   rightControls.insertBefore(skip10elem, rightControls.firstChild);
   rightControls.insertBefore(back10elem, rightControls.firstChild);
+}
+
+function skipSeconds() {
+  var video = document.getElementsByTagName("video")[0];
+  video.currentTime += 10;
+}
+
+function backSeconds() {
+  var video = document.getElementsByTagName("video")[0];
+  video.currentTime -= 10;
 }
 
 // fix: script wouldnt load when pressing BACK
