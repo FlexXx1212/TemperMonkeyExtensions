@@ -14,7 +14,6 @@
 // ==/UserScript==
 
 function doc_keyUp(e) {
-  console.log(e.target);
   if (
     e.target.tagName.toLowerCase() == "textarea" ||
     e.target.id === "search" ||
@@ -24,25 +23,25 @@ function doc_keyUp(e) {
   ) {
     return;
   }
-  if (
-    e.target.classList.contains("yt-formatted-string") &&
-    e.target.tagName.toLowerCase() !== "a"
-  ) {
+
+  if ( e.target.classList.contains("yt-formatted-string") && e.target.tagName.toLowerCase() !== "a" ) {
     return;
   }
+
   var video = document.getElementsByTagName("video")[0];
+
   if (e.keyCode == 65) {
     video.currentTime -= 5;
-  }
-  if (e.keyCode == 68) {
+  } else if (e.keyCode == 68) {
     video.currentTime += 5;
-  }
-  if (e.keyCode == 83) {
+  } else if (e.keyCode == 83) {
     if (video.paused) {
       video.play();
     } else {
       video.pause();
     }
+  } else if (e.keyCode == 81) {
+    video.currentTime += 5;
   }
 }
 document.addEventListener("keyup", doc_keyUp, false);
