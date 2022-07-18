@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Hotkeys
 // @namespace      Flex
-// @version        1.3
+// @version        1.4
 // @description    Play Skip Rewind Pause for Youtube on Keys : A S D & Unlimited Playback Rates (and other pages)
 // @author         FlexNiko
 // @match          http*://*.youtube.com/*
@@ -16,8 +16,11 @@
 // ==/UserScript==
 
 var lastPlaybackRate = -1;
-
+var originalTitle = "";
 function doc_keyUp(e) {
+  if(originalTitle == "") {
+      originalTitle = document.getElementsByTagName("title")[0].innerText;
+  }
   if (
     e.target.tagName.toLowerCase() == "textarea" ||
     e.target.id === "search" ||
@@ -46,7 +49,11 @@ function doc_keyUp(e) {
     } else {
         video.playbackRate = lastPlaybackRate + 0.25;
         var b = document.getElementsByClassName("ytp-bezel-text");
-        b[0].innerText = video.playbackRate + "x";
+        if(b != null && b.length > 0) {
+            b[0].innerText = video.playbackRate + "x";
+        } else {
+            document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle
+        }
         lastPlaybackRate = video.playbackRate;
     }
   }
@@ -56,7 +63,11 @@ function doc_keyUp(e) {
       } else if(lastPlaybackRate > 0.25) {
           video.playbackRate = lastPlaybackRate - 0.25;
           var c = document.getElementsByClassName("ytp-bezel-text");
-          c[0].innerText = video.playbackRate + "x";
+          if(c != null && c.length > 0) {
+            c[0].innerText = video.playbackRate + "x";
+          } else {
+            document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle
+          }
           lastPlaybackRate = video.playbackRate;
       }
   }
