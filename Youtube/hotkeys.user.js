@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Video Hotkeys
 // @namespace      Flex
-// @version        1.5
+// @version        1.6
 // @description    Play Skip Rewind Pause for Youtube or any other Websites on Keys : A S D & Unlimited Playback Rates (x2.5 etc.)
 // @author         FlexNiko
 // @match          *://*/*
