@@ -1,15 +1,10 @@
 // ==UserScript==
-// @name           Youtube Hotkeys
+// @name           Video Hotkeys
 // @namespace      Flex
-// @version        1.4
-// @description    Play Skip Rewind Pause for Youtube on Keys : A S D & Unlimited Playback Rates (and other pages)
+// @version        1.5
+// @description    Play Skip Rewind Pause for Youtube or any other Websites on Keys : A S D & Unlimited Playback Rates (x2.5 etc.)
 // @author         FlexNiko
-// @match          http*://*.youtube.com/*
-// @match          http*://youtube.com/*
-// @match          http*://*.twitch.tv/videos/*
-// @match          http*://twitch.tv/videos/*
-// @match          http*://*.jenysmith.net/*
-// @match          http*://jenysmith.net/*
+// @match          *://*/*
 // @grant          GM_addStyle
 // @grant          GM_setValue
 // @grant          GM_getValue
