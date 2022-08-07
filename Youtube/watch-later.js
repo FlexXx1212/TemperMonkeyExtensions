@@ -1,13 +1,13 @@
 // ==UserScript==
 // @name           Youtube Watch Later Buttons
 // @namespace      Flex
-// @version        0.1
+// @version        0.2
 // @description    Add buttons to playlist to easily remove
 // @author         FlexNiko
-// @include        http://www.youtube.com/playlist?list=WL
-// @include        http://youtube.com/playlist?list=WL
-// @include        https://www.youtube.com/playlist?list=WL
-// @include        https://youtube.com/playlist?list=WL
+// @match          https://www.youtube.com/*
+// @match          http://www.youtube.com/*
+// @match          https://youtube.com/*
+// @match          http://youtube.com/*
 // @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
 // @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant          GM_addStyle
@@ -16,13 +16,14 @@
 // ==/UserScript==
 
 var added = false;
-const myInterval = setInterval(addButtons,2000);
+const myInterval = setInterval(addButtons,1000);
 
 function addButtons() {
     if(added === true) {
         clearInterval(myInterval);
         return;
     }
+    if(!window.location.href.includes('playlist?list=WL')) {return}
     console.log("adding buttons");
     var videoCards = document.getElementsByTagName("ytd-playlist-video-renderer");
     var btnRemove = document.createElement("button");
