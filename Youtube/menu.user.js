@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Youtube Menu
 // @namespace      Flex
-// @version        1.3
+// @version        1.4
 // @description    Adds a Menu in the Top Bar with useful functions
 // @author         FlexNiko
 // @include        http://www.youtube.com/*
@@ -248,6 +248,7 @@ GM_addStyle(`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  height: auto;
 }
 
 /* The actual popup */
