@@ -54,5 +54,10 @@ function handleTotals() {
   });
 }
 
+function overtimeDisplay() {
+    handleNegativeEntries();
+    handleTotals();
+}
+
 // fix: script wouldnt load when pressing BACK
 window.onunload = function() {};
