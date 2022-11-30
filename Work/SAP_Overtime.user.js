@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           SAP - Overtime
 // @namespace      Flex
-// @version        1.0
+// @version        1.1
 // @description    Adds an overtime display
 // @author         FlexNiko
 // @include        https://hr-selfservice.intra.men.de:44309/*
