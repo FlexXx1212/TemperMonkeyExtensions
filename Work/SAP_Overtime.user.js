@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           SAP - Overtime
 // @namespace      Flex
-// @version        1.1
+// @version        1.2
 // @description    Adds an overtime display
 // @author         FlexNiko
 // @include        https://hr-selfservice.intra.men.de:44309/*
@@ -13,9 +13,10 @@
 // ==/UserScript==
 
 
-if(window.location.href.includes("#TimeEntry-displayTimestatement")) {
-    waitForKeyElements("#__toolbar0", overtimeDisplay);
-}
+//if(window.location.href.includes("#TimeEntry-displayTimestatement")) {
+//    waitForKeyElements("#__toolbar0", overtimeDisplay);
+//}
+waitForKeyElements('[id=application-TimeEntry-displayTimestatement-component---timeStatementList--columnListItem-application-TimeEntry-displayTimestatement-component---timeStatementList--timestatementTable-0', overtimeDisplay);
 
 function handleNegativeEntries(){
   var foundEntries = $(".sapMObjectNumberStatusError");
@@ -55,6 +56,7 @@ function handleTotals() {
 }
 
 function overtimeDisplay() {
+    console.log("bla");
     handleNegativeEntries();
     handleTotals();
 }
