@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           SAP - Hour Calc
 // @namespace      Flex
-// @version        1.0
+// @version        1.1
 // @description    Adds a Display of Current Daily hours, and hour diff
 // @author         FlexNiko
 // @include        https://hr-selfservice.intra.men.de:44309/*
@@ -11,9 +11,8 @@
 // @grant          GM_setValue
 // @grant          GM_getValue
 // ==/UserScript==
-if(window.location.href.includes("#TimeEntry-change")) {
-    waitForKeyElements("#__toolbar0", createDisplay);
-}
+
+waitForKeyElements('[id^="__title"][id*="-inner"]', createDisplay);
 
 var currentSeconds = 0;
 const dailySeconds = 8 * 60 * 60;
