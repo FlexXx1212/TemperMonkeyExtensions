@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name           Video Hotkeys
 // @namespace      Flex
-// @version        1.9
+// @version        2.0
 // @description    Play Skip Rewind Pause for Youtube or any other Websites on Keys : A S D & Unlimited Playback Rates (x2.5 etc.)
 // @author         FlexNiko
 // @match          *://*/*
@@ -33,7 +33,15 @@ function doc_keyUp(e) {
   ) {
     return;
   }
-  var video = document.getElementsByTagName("video")[0];
+  var videoElements = document.getElementsByTagName("video");
+  var video;
+  var longestDuration = 0;
+  for (const curVideo of videoElements) {
+      if(curVideo.duration > longestDuration) {
+          longestDuration = curVideo.duration;
+          video = curVideo;
+      }
+  }
   if (e.keyCode == 65) {
     video.currentTime -= 5;
   }
