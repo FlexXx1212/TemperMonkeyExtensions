@@ -57,7 +57,9 @@ function doc_keyUp(e) {
         if(b != null && b.length > 0) {
             b[0].innerText = video.playbackRate + "x";
         }
-        document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle
+        if(document.getElementsByTagName("title")[0] != null) {
+          document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle;
+        }
         lastPlaybackRate = video.playbackRate;
     }
   }
@@ -70,7 +72,9 @@ function doc_keyUp(e) {
           if(c != null && c.length > 0) {
             c[0].innerText = video.playbackRate + "x";
           }
-          document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle
+          if(document.getElementsByTagName("title")[0] != null) {
+            document.getElementsByTagName("title")[0].innerText = video.playbackRate + "x - " + originalTitle;
+          }
           lastPlaybackRate = video.playbackRate;
       }
   }
