@@ -18,7 +18,7 @@ function extractNumberFromString(inputString) {
       return null;
     }
   }
-  
+
   $( document ).ready(function() {
       setInterval(function () {
           var videoElements = document.getElementsByTagName("video");
