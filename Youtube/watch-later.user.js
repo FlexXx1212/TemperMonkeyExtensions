@@ -1,63 +1,35 @@
 // ==UserScript==
-// @name           Youtube Watch Later Buttons
+// @name           YT TEST
 // @namespace      Flex
-// @version        1.0
-// @description    Add buttons to playlist to easily remove
+// @version        1.2
+// @description    TEST
 // @author         FlexNiko
-// @match          https://www.youtube.com/*
-// @match          http://www.youtube.com/*
-// @match          https://youtube.com/*
-// @match          http://youtube.com/*
-// @require        http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+// @include        https://*youtube.com/*
+// @require        https://code.jquery.com/jquery-3.7.1.min.js
 // @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant          GM_addStyle
-// @grant          GM_setValue
-// @grant          GM_getValue
 // ==/UserScript==
 
+waitForKeyElements("ytd-playlist-video-renderer", addButtons);
 var added = false;
-//const myInterval = setInterval(addButtons,1000);
-waitForKeyElements("ytd-playlist-video-list-renderer", addButtons);
-function addButtons() {
-    //if(added === true) {
-    //    clearInterval(myInterval);
-    //    return;
-    //}
+function addButtons(elem) {
     if(!window.location.href.includes('playlist?list=WL')) {return}
-    console.log("adding buttons");
     var videoCards = document.getElementsByTagName("ytd-playlist-video-renderer");
     var btnRemove = document.createElement("button");
     btnRemove.classList.add("customRemoveButton");
     btnRemove.innerText = "REMOVE";
-    for(var i = 0; i < videoCards.length; i++) {
-        btnRemove.setAttribute("removeID",i);
-        //btnRemove.addEventListener("click", removeVideo);
-
-        var currentButton = btnRemove.cloneNode(true);
-        currentButton.addEventListener("click", removeVideo);
-        videoCards[i].appendChild(currentButton);
-    }
-    added = true;
+    btnRemove.addEventListener("click", removeVideo);
+    elem[0].appendChild(btnRemove);
 }
 
 function removeVideo(event) {
-     event = event || window.event;
-    var removeID = event.srcElement.attributes.removeid.value;
-    var videoCards = document.getElementsByTagName("ytd-playlist-video-renderer");
-    videoCards[removeID].children[2].children[0].children[2].click();
+    event = event || window.event;
+    event.currentTarget.parentElement.children[2].children[0].children[2].click();
     setTimeout(clickRemove,100);
 }
 
 function clickRemove() {
     document.getElementsByTagName("ytd-menu-service-item-renderer")[2].click();
-    setTimeout(recalculateRemoveIDs, 200);
-}
-
-function recalculateRemoveIDs() {
-    var videoCards = document.getElementsByTagName("ytd-playlist-video-renderer");
-    for(var i = 0; i < videoCards.length; i++) {
-        videoCards[i].lastChild.setAttribute("removeID",i);
-    }
 }
 
 // fix: script wouldnt load when pressing BACK
