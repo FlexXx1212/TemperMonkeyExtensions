@@ -1,14 +1,17 @@
 // ==UserScript==
-// @name           YT TEST
+// @name           Youtube Watch Later Buttons
 // @namespace      Flex
 // @version        1.2
-// @description    TEST
+// @description    Add buttons to playlist to easily remove
 // @author         FlexNiko
 // @include        https://*youtube.com/*
 // @require        https://code.jquery.com/jquery-3.7.1.min.js
 // @require        https://gist.github.com/raw/2625891/waitForKeyElements.js
 // @grant          GM_addStyle
+// @grant          GM_setValue
+// @grant          GM_getValue
 // ==/UserScript==
+
 
 waitForKeyElements("ytd-playlist-video-renderer", addButtons);
 var added = false;
